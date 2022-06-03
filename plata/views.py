@@ -23,7 +23,7 @@ def signup(request):
             return redirect('index')
     else:
         form = RegForm()
-    return render(request, 'reg/signup.html', {'form': form})
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 
