@@ -1,5 +1,5 @@
 {% load static %}
-{%load bootstap4%}
+{%load bootstrap4%}
 <html lang="en">
 <head>
     
@@ -9,7 +9,11 @@
     
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <title>LikeUme</title>
-    {%bootstrap_css%}
+    
+ {% block styles %}
+  {% bootstrap_css %}
+  {% endblock %}
+
 </head>
 <body class="reg">
 {% block content %}
@@ -17,6 +21,9 @@
 {% endblock %}
 
 
-
+{% block scripts %}
+       
+     {% bootstrap_javascript %}
+    {% endblock %}
 </body>
 </html>
