@@ -6,22 +6,23 @@ from .models import Post, Comment, Profile, Follow
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.views.generic import RedirectView
+from .forms import RegForm,PostForm,UpdateUserProfileForm,UpdateUserForm,CommentForm
 
 
 
 
 def signup(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = RegForm(request.POST)
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
+            f_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=f_password)
             login(request, user)
             return redirect('index')
     else:
-        form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form}
+        form = RegForm()
+    return render(request, 'registration/signup.html', {'form': form})
 
 
