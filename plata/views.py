@@ -130,6 +130,7 @@ def follow(request, to_follow):
 
 @login_required(login_url='login')
 def search_profile(request):
+    
     if 'search_user' in request.GET and request.GET['search_user']:
         name = request.GET.get("search_user")
         results = Profile.search_profile(name)

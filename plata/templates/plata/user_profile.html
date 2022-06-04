@@ -8,18 +8,18 @@
                 <div class="row">
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
-                        <img class="rounded-circle account-img" src="{{ user_prof.profile.profile_picture.url }}">
+                        <img class="r" src="{{ user_prof.profile.profile_picture.url }}" style="width: 100%;aspect-ratio: 1;clip-path: circle();">
                     </div>
                     <div class="col-md-6 mt-3">
                         <div class="media-body">
                             <div class="account-heading">
                                 <span class="mr-3 text-secondary username">{{ user_prof.username }}</span>
                                 {% if follow_status %}
-                                <a class="btn btn-sm btn-outline-danger ml-5" href="{% url 'unfollow' user_prof.profile.id %}">Unfollow</a>
+                                <a class="btn btn-sm btn-outline-success ml-5" href="{% url 'unfollow' user_prof.profile.id %}"><span class="me-2" style="margin-right: 1vw;">Unfollow</span><i class="fa-regular fa-square-check ms-2"></i></a>
 
                                 {%else%}
 
-                                <a class="btn btn-sm btn-primary ml-5" href="{% url 'follow' user_prof.profile.id %}">Follow</a>
+                                <a class="btn btn-sm btn-dark ml-5" href="{% url 'follow' user_prof.profile.id %}">Follow</a>
                                 {% endif %}
                 
                                 
@@ -44,7 +44,7 @@
         <div class="card">
             <div class="card-body parent ">
                 <div class="im">
-                <img src="{{image.image.url}}" alt="{{image.caption}}" class="card-img">
+                <img src="{{image.image.url}}" alt="{{image.caption}}" class="card-img" style="aspect-ratio: 1;">
                 <p id="overlay"class="text"> 
                     <i class="fas fa-heart" style="color:white; font-size: 18"></i> 
                     <span style="color: white">{{image.likes.count}}</span>
