@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
@@ -131,3 +132,91 @@ def search_profile(request):
     else:
         message = "You haven't searched for any image category"
     return render(request, 'plata/results.html', {'message': message})
+
+
+
+@login_required(login_url='login')
+def post_comment(request, id):
+    image = get_object_or_404(Post, pk=id)
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        is_liked = True
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            savecomment = form.save(commit=False)
+            savecomment.post = image
+            savecomment.user = request.user.profile
+            savecomment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = CommentForm()
+    context = {
+        'image': image,
+        'form': form,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    return render(request, 'plata/single_post.html', context)
+
+
+
+def like_post(request):
+    # image = get_object_or_404(Post, id=request.POST.get('image_id'))
+    image = get_object_or_404(Post, id=request.POST.get('id'))
+    is_liked = False
+    if image.likes.filter(id=request.user.id).exists():
+        image.likes.remove(request.user)
+        is_liked = False
+    else:
+        image.likes.add(request.user)
+        is_liked = False
+
+    context = {
+        'image': image,
+        'is_liked': is_liked,
+        'total_likes': image.total_likes()
+    }
+    if request.is_ajax():
+        html = render_to_string('plata/like_section.html', context, request=request)
+        return JsonResponse({'form': html})
+
+class PostLikeToggle(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        id = self.kwargs.get('id')
+        print(id)
+        obj = get_object_or_404(Post, pk=id)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user in obj.likes.all():
+            obj.likes.remove(user)
+        else:
+            obj.likes.add(user)
+        return url_
+
+
+class PostLikeAPIToggle(APIView):
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, id=None, format=None):
+        # id = self.kwargs.get('id')
+        obj = get_object_or_404(Post, pk=id)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        updated = False
+        liked = False
+        if user in obj.likes.all():
+            liked = False
+            obj.likes.remove(user)
+        else:
+            liked = True
+            obj.likes.add(user)
+        updated = True
+        data = {
+
+            'updated': updated,
+            'liked': liked,
+        }
+    
+        return Response(data)
