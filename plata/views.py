@@ -3,10 +3,14 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .models import Post, Comment, Profile, Follow
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.views.generic import RedirectView
 from .forms import RegForm,PostForm,UpdateUserProfileForm,UpdateUserForm,CommentForm
+
 
 
 
