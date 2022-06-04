@@ -178,7 +178,7 @@ def like_post(request):
         'total_likes': image.total_likes()
     }
     if request.is_ajax():
-        html = render_to_string('plata/like_section.html', context, request=request)
+        html = render_to_string('plata/like.html', context, request=request)
         return JsonResponse({'form': html})
 
 class PostLikeToggle(RedirectView):
