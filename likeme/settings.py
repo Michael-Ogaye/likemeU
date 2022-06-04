@@ -14,6 +14,9 @@ import os
 
 from decouple import config, Csv
 import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     'plata',
     'crispy_forms',
     'bootstrap4',
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -124,6 +128,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+
+cloudinary.config( 
+  cloud_name=config('CLOUD_NAME'),
+  api_key=config('API_KEY'),
+  api_secret=config('API_SECRET')   
+)
+
+
+
+
+
 
 STATIC_URL = 'static/'
 
