@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.views.generic import RedirectView
 from .forms import RegForm,PostForm,UpdateUserProfileForm,UpdateUserForm,CommentForm
+from .emails import send_email
 
 
 
@@ -24,6 +25,7 @@ def signup(request):
             username = form.cleaned_data.get('username')
             f_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=f_password)
+            send_email(username,user.email)
             login(request, user)
             return redirect('home')
     else:
