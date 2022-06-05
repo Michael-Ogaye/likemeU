@@ -12,24 +12,20 @@
             <a class="nav-link active text-dark" aria-current="page" href="{% url 'home'%}">Home</a>
           </li>
          
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
+         
           
         </ul>
-        <form class="d-flex my-auto  justify-content-between" action="{% url 'search' %}" id="searchform">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_user"  autocomplete="off" id="searching" style="background-color: transparent;">
-          
-          <button class="btn btn-outline-dark ms-3 " type="submit">Search</button>
-        </form>
+        {%if request.user.is_authenticated%}
+    <div class="" style="text-align: right;">
+      <p class="my-auto display-5"><a class="m-3 fs-2 nav-link " href="{% url 'signout'%}">Logout<i class="fa-solid fa-arrow-right-to-bracket ms-4"></i></a></p>
+    </div>
+    {%else%}
+    <div class="d-flex justify-content-end px-5 " > 
+      <p class="my-auto display-5"><a style="color: rgb(66, 26, 54);" class="m-3 fs-2 text-light" href="{% url 'signup'%}"> Register</a></p>
+      <p class="my-auto"><a class="text-" style="color: rgb(66, 26, 54);" href="{% url 'login'%}"><i class="fa-solid fa-arrow-right-from-bracket"></i>Login</a></p>
+    </div>
+    {%endif%}
+       
       </div>
     </div>
   </nav>
