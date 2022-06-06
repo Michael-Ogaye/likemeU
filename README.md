@@ -29,6 +29,10 @@
 * Postgres
 * Cloudinary
 
+### Admin creds
+* user:ogaye
+* pass:Aust1929
+
 
   
 [Go Back to the top](#portfolio)
