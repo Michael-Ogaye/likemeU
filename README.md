@@ -29,9 +29,6 @@
 * Postgres
 * Cloudinary
 
-### Admin creds
-* user:ogaye
-* pass:Aust1929
 
 
   
